@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project
     version="1.0.0" 
-    uuid="_0xjlgOdYEeS2OrJwDXs3UQ" 
+    uuid="_y51-MOjSEeSk7t16Exvu4A" 
     >
+    <dependencies>
+        <dependency name="br.lib.rpi.berryclip" uuid="_0Vl34Bf3EeSXf42Lm_Zj8w" version="1.8.3"/>
+        <dependency name="com.bitreactive.library.http" uuid="_Q0rnEN9oEeCpD8lO_Mt_YQ" version="1.1.0"/>
+        <dependency name="com.bitreactive.library.mqtt" uuid="_iVDkMOJLEeGulKFN7xtCsw" version="2.9.2"/>
+    </dependencies>
 </project>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<block
+    name="LDS" 
+    uuid="_IZAOcejTEeSk7t16Exvu4A" 
+    status="under construction" 
+    type="system" 
+    >
+    <required>
+        <block name="c0" uuid="_zXLaoRlyEeSg39Zl1ZxyBw"/>
+        <block name="c1" uuid="_CDPgcD5UEeSLNMcFh65MeQ"/>
+    </required>
+</block>
