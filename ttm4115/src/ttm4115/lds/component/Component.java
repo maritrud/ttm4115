@@ -17,12 +17,22 @@ public class Component extends Block {
 		return new Parameters(m);
 	}
 
-	public MQTTMessage convertButton(SingletonData SD) {
-		byte[] bytes = ((SingletonData) SD).getInstance().getBytes();
-		MQTTMessage m = new MQTTMessage( bytes, "lockStatus");
-		m.setQoS(1);
-		return m;
+	
+	public boolean serverReboot(MQTTMessage m){
+		String info = new String(m.getPayload());
+		System.out.println(info);
+		if (info.contains("reboot")){
+			return true;
+		}
+		else{return false;}
 	}
+
+	//public MQTTMessage convertButton(SingletonData SD) {
+		//byte[] bytes = ((SingletonData) SD).getInstance().getBytes();
+		//MQTTMessage m = new MQTTMessage( bytes, "lockStatus");
+		//m.setQoS(1);
+		//return m;
+	//}
 	
 	public MQTTMessage sendUp() {
 		lockStatus = id+" "+"1";
@@ -48,14 +58,14 @@ public class Component extends Block {
 		System.out.println("mqtt ready");
 	}
 
-	public MQTTMessage createMessage() {
-		String payload = "Doen er ledig! Kjapp deg!";
-		byte[] bytes = payload.getBytes();
-	    String topic = "lockStatus";
-		MQTTMessage message = new MQTTMessage(bytes, topic);
-		message.setQoS(2);
-		return message;
-	}
+//	public MQTTMessage createMessage() {
+//		String payload = "Doen er ledig! Kjapp deg!";
+//		byte[] bytes = payload.getBytes();
+//	    String topic = "lockStatus";
+//		MQTTMessage message = new MQTTMessage(bytes, topic);
+//		message.setQoS(2);
+//		return message;
+//	}
 
 	public void printMessage(MQTTMessage m) {
 		System.out.println("---------- Received Message ----------");
@@ -67,5 +77,17 @@ public class Component extends Block {
 	public void ready() {
 		System.out.println("Ready for use.\n");
 	}
+
+
+	public MQTTMessage sendStatus() {
+		byte[] bytes = lockStatus.getBytes();
+		String topic = "lockStatus";
+		MQTTMessage message = new MQTTMessage(bytes, topic);
+		message.setQoS(1);
+		return message;
+		
+	}
+
+
 
 }
