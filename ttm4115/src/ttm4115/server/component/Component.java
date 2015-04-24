@@ -15,6 +15,7 @@ public class Component extends Block {
 
 	public java.lang.String readyMessage = "Ready to serve \n";
 	public java.lang.String database = "/home/pi/server/database.txt";
+	ArrayList<Toilet> toilets = new ArrayList();
 
 	public com.bitreactive.library.mqtt.robustmqtt.RobustMQTT.Parameters init() {
 		MQTTConfigParam m = new MQTTConfigParam("dev.bitreactive.com");
@@ -40,21 +41,30 @@ public class Component extends Block {
 		
 	}
 
-	public void updateStatus(MQTTMessage update, ArrayList toilets) {
+	public boolean updateStatus(MQTTMessage update, ArrayList<Toilet> toilets) {
 		String payload = new String( update.getPayload());
 		String[] parts = payload.split(" ");
 		int id = Integer.parseInt(parts[0]);
 		int status = Integer.parseInt(parts[1]);
-		DateFormat df = new SimpleDateFormat("dd/MM/yy-HH:mm:ss");
-		Date dateobj = new Date();
 		
+		Toilet toilet = findToilet(toilets, id);
 		
-		System.out.println(df.format(dateobj));
+		if (toilet == null) {
+			return false;
+		}
 		
+		toilet.setStatus(status);
+		toilet.setTime();
+		
+		if (status==1) {
+			toilets.add(0, toilet);
+		} else {
+			toilets.add(toilet);
+		}
+		return true;
 	}
 
-	public ArrayList convertToList(String database) {
-		ArrayList toilets = new ArrayList();
+	public ArrayList<Toilet> convertToList(String database) {
 		
 		for (String line : database.split("\n")) {
 			String[] room;
@@ -68,6 +78,20 @@ public class Component extends Block {
 			toilets.add(toilet);
 		}
 		return toilets;
+	}
+	
+	private Toilet findToilet(ArrayList<Toilet> toilets, int id) {
+		for (Toilet toilet : toilets ) {
+			if (toilet.getId() == id) {
+				toilets.remove(toilet);
+				return toilet;
+			}
+		}
+		return null;
+	}
+
+	public void prepareForSaving() {
+		String 
 	}
 
 }
