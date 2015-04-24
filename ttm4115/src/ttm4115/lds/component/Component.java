@@ -25,6 +25,7 @@ public class Component extends Block {
 			return true;
 		}
 		else{return false;}
+		
 	}
 
 	//public MQTTMessage convertButton(SingletonData SD) {
@@ -40,7 +41,7 @@ public class Component extends Block {
 		byte[] bytes = lockStatus.getBytes();
 		String topic = "lockStatus";
 		MQTTMessage message = new MQTTMessage(bytes, topic);
-		message.setQoS(1);
+		message.setQoS(2);
 		return message;
 	}
 	
@@ -50,7 +51,7 @@ public class Component extends Block {
 		byte[] bytes = lockStatus.getBytes();
 		String topic = "lockStatus";
 		MQTTMessage message = new MQTTMessage(bytes, topic);
-		message.setQoS(1);
+		message.setQoS(2);
 		return message;
 	}
 	
@@ -82,8 +83,9 @@ public class Component extends Block {
 	public MQTTMessage sendStatus() {
 		byte[] bytes = lockStatus.getBytes();
 		String topic = "lockStatus";
+		System.out.println("send status");
 		MQTTMessage message = new MQTTMessage(bytes, topic);
-		message.setQoS(1);
+		message.setQoS(2);
 		return message;
 		
 	}
