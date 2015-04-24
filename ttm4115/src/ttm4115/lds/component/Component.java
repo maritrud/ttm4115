@@ -90,8 +90,4 @@ public class Component extends Block {
 		
 	}
 
-
-	
-	
-
 }
