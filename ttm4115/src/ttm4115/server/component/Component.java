@@ -32,9 +32,13 @@ public class Component extends Block {
 
 	public void processMessage(MQTTMessage m) {
 		String payload =  new String( m.getPayload());
-		String[] parts = payload.split(" ");
-		int id = Integer.parseInt(parts[0]);
-		int status = Integer.parseInt(parts[1]);	
+		
+		if(payload.contains("1") || payload.contains("0")){
+			String[] parts = payload.split(" ");
+			int id = Integer.parseInt(parts[0]);
+			int status = Integer.parseInt(parts[1]);	
+			}
+		else {}
 	}
 	
 	private void saveToDatabase(int id, boolean status) {
@@ -93,5 +97,17 @@ public class Component extends Block {
 	public void prepareForSaving() {
 		String 
 	}
+
+	public MQTTMessage reboot() {
+		String rebootMessage = "reboot";
+		System.out.println(rebootMessage);
+		byte[] bytes = rebootMessage.getBytes();
+		String topic = "lockStatus";
+		MQTTMessage message = new MQTTMessage(bytes, topic);
+		message.setQoS(1);
+		return message;
+	}
+
+
 
 }
