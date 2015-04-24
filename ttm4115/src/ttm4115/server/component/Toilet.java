@@ -5,11 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Toilet {
-	int id;
-	int status;
-	String description;
-	String time;
-	static DateFormat df = new SimpleDateFormat("dd/MM/yy-HH:mm:ss");
+	private int id;
+	private int status;
+	private String description;
+	private String time;
+	private static DateFormat df = new SimpleDateFormat("dd/MM/yy-HH:mm:ss");
 	
 	public Toilet() {
 		super();
