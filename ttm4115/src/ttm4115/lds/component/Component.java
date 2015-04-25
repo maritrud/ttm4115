@@ -5,7 +5,6 @@ import com.bitreactive.library.mqtt.MQTTMessage;
 import com.bitreactive.library.mqtt.robustmqtt.RobustMQTT.Parameters;
 
 import no.ntnu.item.arctis.runtime.Block;
-import no.ntnu.item.arctis.runtime.SingletonData;
 
 public class Component extends Block {
 	
@@ -23,56 +22,25 @@ public class Component extends Block {
 		System.out.println(info);
 		if (info.contains("reboot")){
 			return true;
-		}
-		else{return false;}
-		
+		} else {return false;}
 	}
-
-	//public MQTTMessage convertButton(SingletonData SD) {
-		//byte[] bytes = ((SingletonData) SD).getInstance().getBytes();
-		//MQTTMessage m = new MQTTMessage( bytes, "lockStatus");
-		//m.setQoS(1);
-		//return m;
-	//}
 	
 	public MQTTMessage sendUp() {
 		lockStatus = id+" "+"1";
-		System.out.println(lockStatus);
 		byte[] bytes = lockStatus.getBytes();
 		String topic = "lockStatus";
 		MQTTMessage message = new MQTTMessage(bytes, topic);
-		message.setQoS(2);
+		message.setQoS(1);
 		return message;
 	}
 	
 	public MQTTMessage sendDown() {
 		lockStatus = id+" "+"0";
-		System.out.println(lockStatus);
 		byte[] bytes = lockStatus.getBytes();
 		String topic = "lockStatus";
 		MQTTMessage message = new MQTTMessage(bytes, topic);
 		message.setQoS(2);
 		return message;
-	}
-	
-	public void reportReady() {
-		System.out.println("mqtt ready");
-	}
-
-//	public MQTTMessage createMessage() {
-//		String payload = "Doen er ledig! Kjapp deg!";
-//		byte[] bytes = payload.getBytes();
-//	    String topic = "lockStatus";
-//		MQTTMessage message = new MQTTMessage(bytes, topic);
-//		message.setQoS(2);
-//		return message;
-//	}
-
-	public void printMessage(MQTTMessage m) {
-		System.out.println("---------- Received Message ----------");
-	    System.out.println("Sent to topic: " + m.getTopic());
-	    System.out.println("Payload: " + new String(m.getPayload()));
-	    System.out.println("--------------------------------------");
 	}
 
 	public void ready() {

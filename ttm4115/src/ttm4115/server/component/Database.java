@@ -2,7 +2,6 @@ package ttm4115.server.component;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -25,16 +24,18 @@ public class Database {
 		System.out.println("Opened database successfully");
 	}
 
-	public void setStatus(int id, boolean status, String timestamp) {
+	public void setStatus(int id, int status, String timestamp) {
 		Statement stmt = null;
+		System.out.println("UPDATE lds_unit SET status="+status+", time=\""+timestamp+"\" WHERE id="+id);
 		try {
 			stmt = conn.createStatement();
 			String sql;
-			sql = "UPDATE lds_unit SET status="+status+", timestamp="+timestamp+" WHERE id="+id;
-			ResultSet rs = stmt.executeQuery(sql);
+			sql = "UPDATE lds_unit SET status="+status+", time=\""+timestamp+"\" WHERE id="+id;
+			stmt.executeUpdate(sql);
+			
+			
 			
 			//STEP 6: Clean-up environment
-			rs.close();
 			stmt.close();
 		}catch(SQLException se){
 			//Handle errors for JDBC
